@@ -328,7 +328,26 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  return 2;
+  unsigned sig = uf >>31; 
+  const unsigned maskSig = 0x7fffffff;//~(1 << 31);
+  const unsigned maskSigAndExp = 0x007fffff;
+  unsigned exp = (uf & maskSig) >> 23;
+  unsigned frac = uf & maskSigAndExp;
+
+  if(exp == 0xff) {
+    // Infinite / NaN
+    return uf;
+  } else if(exp == 0x00){
+    // Denormalized
+    // only shift frac, may become a normalized floating number
+    return (sig << 31) | (frac << 1);
+  } else {
+    // Normalized
+    // just add exp bit
+    ++exp;
+    return (sig << 31) | (exp << 23) | frac;
+  }
+  return uf;
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -343,6 +362,31 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
+  const int outOfRange = 0x80000000;
+
+  unsigned sig = uf >>31; 
+  const unsigned maskSig = 0x7fffffff;//~(1 << 31);
+  // const unsigned maskSigAndExp = 0x007fffff;
+  unsigned exp = (uf & maskSig) >> 23;
+  // unsigned frac = uf & maskSigAndExp;
+
+  if(exp == 0xff) {
+    // Nan or Infinite
+    return outOfRange;
+  } else if (exp < 0x7f){
+    // Denormalized or too small Normalized 
+    return 0;
+  } else {
+    exp -= 0x7f;
+
+    if(exp < 31u && sig == 0u) // Non-negative
+      return 1 << exp;
+    else if(exp <= 31u && sig == 1u) // Negative
+      return (~(1 << exp)) + 1;
+    else 
+      return outOfRange;
+  }
+
   return 2;
 }
 /* 
@@ -359,5 +403,21 @@ int floatFloat2Int(unsigned uf) {
  *   Rating: 4
  */
 unsigned floatPower2(int x) {
-    return 2;
+    const unsigned posInf = 0x7f800000;
+
+    if(x > 127) {
+      // too large
+      return posInf;
+    } else if (x > -127) {
+      // normalized range power [-126, 127]
+      unsigned exp = x + 127;
+      return exp << 23;
+    } else if (x >= -129) {
+      // denorm rage power [-129, -127]
+      int shift = -x - 126;
+      return (0x00800000 >> shift);
+    } else {  
+      // too small
+      return 0;
+    }
 }

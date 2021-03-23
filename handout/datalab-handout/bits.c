@@ -190,7 +190,7 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  return ~x+1;
 }
 //3
 /* 
@@ -203,7 +203,10 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  int sig = 1 << 31; // a 32 bit signed 'num' is not negative <=> !(num & sig) == 1
+  int bigger = !((x + (~0x30+1)) &  sig); // x - 0x30 >= 0
+  int less = !((0x39 + (~x+1)) & sig); // 0x39 - x >= 0
+  return bigger & less;
 }
 /* 
  * conditional - same as x ? y : z 
@@ -213,7 +216,14 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  int flag = !x;  
+                  // x == 0 -> flag 0x00000001
+                  // x != 0 -> flag 0x00000000
+  
+  flag = flag + (~1 + 1); // flag - 1  (add 0x11111111)
+                      // x == 0 -> flag 0x00000000
+                      // x != 0 -> flag 0x11111111
+  return (flag & y) | ((~flag) & z);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -222,8 +232,23 @@ int conditional(int x, int y, int z) {
  *   Max ops: 24
  *   Rating: 3
  */
+// hard overflow
 int isLessOrEqual(int x, int y) {
-  return 2;
+  int sigX = x >> 31; // sigX/sigY == 0  <=> X/Y >= 0
+  int sigY = y >> 31; // sigX/sigY == -1 <=> X/Y <  0
+
+  int diffSigFlag = sigX ^ sigY; // same sign -> diffSigFlag = 0
+                                 // diff sign -> diffSigFlag = -1
+
+  // consider overflow, we get ret when x and y have different sign bit
+  int diffRet = !(~sigX&sigY); // different sign return
+
+  // when same sign, calculation will not overfolw
+  int sig = 1 << 31; 
+  int sub = y + (~x + 1); // y - x
+  int sameRet = !(sub & sig); // sub >= 0 <=> return 1
+
+  return (~diffSigFlag & sameRet) | (diffSigFlag & diffRet);
 }
 //4
 /* 
@@ -234,8 +259,15 @@ int isLessOrEqual(int x, int y) {
  *   Max ops: 12
  *   Rating: 4 
  */
+// interesting
 int logicalNeg(int x) {
-  return 2;
+  x = x>>16|x;
+  x = x>>8|x;
+  x = x>>4|x;
+  x = x>>2|x;
+  x = x>>1|x;
+  //overlap: x == 0 -> x == 0; x != 0 -> x zero digit is 1
+  return ~x&1;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -249,8 +281,39 @@ int logicalNeg(int x) {
  *  Max ops: 90
  *  Rating: 4
  */
+// so =hard
 int howManyBits(int x) {
-  return 0;
+  /**
+   * 
+   *  
+   */
+
+  int sig, bit0, bit1, bit2, bit4, bit8, bit16;
+
+  sig = x >> 31;
+
+  // -1 -> 0
+  // Tmin -> Tmax
+  x = (sig & ~x) | (~sig & x);
+
+  bit16 = (!!(x >> 16)) << 4; // 16
+  x = x >> bit16;
+
+  bit8 = (!!(x >> 8)) << 3; 
+  x = x >> bit8;
+
+  bit4 = (!!(x >> 4)) << 2;
+  x = x >> bit4;
+
+  bit2 = (!!(x >> 2)) << 1;
+  x = x >> bit2;
+
+  bit1 = (!!(x >> 1)) << 0;
+  x = x >> bit1;
+
+  bit0 = !!x;
+
+  return bit16 + bit8 + bit4 + bit2 + bit1 + bit0 + 1;
 }
 //float
 /* 

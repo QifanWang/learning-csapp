@@ -26,25 +26,96 @@ StartFun:
 # %rdi = src, %rsi = dst, %rdx = len
 ncopy:
 
+# You can modify this portion
+#	# Loop header
+#	xorq %rax,%rax		# count = 0;
+#	andq %rdx,%rdx		# len <= 0?
+#	jle Done		# if so, goto Done:
+#
+#Loop:	mrmovq (%rdi), %r10	# read val from src...
+#	rmmovq %r10, (%rsi)	# ...and store it to dst
+#	andq %r10, %r10		# val <= 0?
+#	jle Npos		# if so, goto Npos:
+#	irmovq $1, %r10
+#	addq %r10, %rax		# count++
+#Npos:	irmovq $1, %r10
+#	subq %r10, %rdx		# len--
+#	irmovq $8, %r10
+#	addq %r10, %rdi		# src++
+#	addq %r10, %rsi		# dst++
+#	andq %rdx,%rdx		# len > 0?
+#	jg Loop			# if so, goto Loop:
+
+
 ##################################################################
 # You can modify this portion
 	# Loop header
 	xorq %rax,%rax		# count = 0;
-	andq %rdx,%rdx		# len <= 0?
+
+	rrmovq %rdx, %rcx
+	iaddq $-7, %rcx
+	jle Old
+Seven:
+	mrmovq (%rdi), %r8
+        mrmovq 8(%rdi), %r9
+        mrmovq 16(%rdi), %r10
+        mrmovq 24(%rdi), %r11
+        mrmovq 32(%rdi), %r12
+        mrmovq 40(%rdi), %r13
+        mrmovq 48(%rdi), %r14
+        rmmovq %r8, (%rsi)
+        rmmovq %r9, 8(%rsi)
+        rmmovq %r10, 16(%rsi)
+        rmmovq %r11, 24(%rsi)
+        rmmovq %r12, 32(%rdi)
+        rmmovq %r13, 40(%rdi)
+        rmmovq %r14, 48(%rdi)
+ele0:	andq %r8, %r8
+	jle ele1
+	iaddq $1, %rax
+	
+ele1:	andq %r9, %r9
+	jle ele2
+	iaddq $1, %rax
+
+ele2:	andq %r10, %r10
+	jle ele3
+	iaddq $1, %rax
+
+ele3:	andq %r11, %r11
+	jle ele4
+	iaddq $1, %rax
+
+ele4:	andq %r12, %r12
+	jle ele5
+	iaddq $1, %rax
+
+ele5:	andq %r13, %r13
+	jle ele6
+	iaddq $1, %rax
+
+ele6:	andq %r14, %r14
+	jle Tail
+	iaddq $1, %rax
+Tail:
+	iaddq $56, %rdi
+	iaddq $56, %rsi
+	iaddq $-7, %rdx
+	iaddq $-7, %rcx
+	jg Seven
+	
+Old:	andq %rdx,%rdx		# len <= 0?
 	jle Done		# if so, goto Done:
 
 Loop:	mrmovq (%rdi), %r10	# read val from src...
 	rmmovq %r10, (%rsi)	# ...and store it to dst
-	andq %r10, %r10		# val <= 0?
+	iaddq $0, %r10		# val <= 0?
 	jle Npos		# if so, goto Npos:
-	irmovq $1, %r10
-	addq %r10, %rax		# count++
-Npos:	irmovq $1, %r10
-	subq %r10, %rdx		# len--
-	irmovq $8, %r10
-	addq %r10, %rdi		# src++
-	addq %r10, %rsi		# dst++
-	andq %rdx,%rdx		# len > 0?
+	iaddq $1, %rax		# count++
+Npos:	iaddq $-1, %rdx	# len--
+	iaddq $8, %rdi			# src++
+	iaddq $8, %rsi			# dst++
+	iaddq $0, %rdx		# len > 0?
 	jg Loop			# if so, goto Loop:
 ##################################################################
 # Do not modify the following section of code
@@ -63,8 +134,8 @@ EndFun:
 	.align 8
 src:
 	.quad -1
-	.quad 2
-	.quad -3
+	.quad -2
+	.quad 3
 	.quad 4
 	.quad 0xbcdefa # This shouldn't get moved
 

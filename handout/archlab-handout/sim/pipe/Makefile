@@ -4,7 +4,7 @@ VERSION=std
 
 # Comment this out if you don't have Tcl/Tk on your system
 
-GUIMODE=-DHAS_GUI
+GUIMODE=-DHAS_GUI -DUSE_INTERP_RESULT
 
 # Modify the following line so that gcc can find the libtcl.so and
 # libtk.so libraries on your system. You may need to use the -L option
@@ -17,7 +17,7 @@ TKLIBS=-L/usr/lib/x86_64-linux-gnu/ -ltk -ltcl
 # header files on your system. Comment this out if you don't have
 # Tcl/Tk.
 
-TKINC=-isystem /usr/include/tcl8.5
+TKINC=-isystem /usr/include/tcl
 
 # Modify these two lines to choose your compiler and compile time
 # flags.

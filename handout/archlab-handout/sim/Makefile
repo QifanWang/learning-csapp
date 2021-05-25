@@ -13,7 +13,7 @@ TKLIBS=-L/usr/lib/x86_64-linux-gnu -ltk8.6 -ltcl8.6
 # header files on your system. Comment this out if you don't have
 # Tcl/Tk.
 
-TKINC=-isystem /usr/include/tcl8.5
+TKINC=-isystem /usr/include/tcl
 
 ##################################################
 # You shouldn't need to modify anything below here

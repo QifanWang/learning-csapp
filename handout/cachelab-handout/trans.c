@@ -48,6 +48,67 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N]) {
       }
     }
   } else if (M == 64) {
+    // for (i = 0; i < N; i += 8) {
+    //   for (j = 0; j < M; j += 8) {
+    //       for(ii = 0; ii < 4; ++ii) {
+    //         a0 = A[i + ii][j + 0];
+    //         a1 = A[i + ii][j + 1];
+    //         a2 = A[i + ii][j + 2];
+    //         a3 = A[i + ii][j + 3];
+    //         a4 = A[i + ii][j + 4];
+    //         a5 = A[i + ii][j + 5];
+    //         a6 = A[i + ii][j + 6];
+    //         a7 = A[i + ii][j + 7];
+
+    //         B[j + 0][i + ii] = a0;
+    //         B[j + 1][i + ii] = a1;
+    //         B[j + 2][i + ii] = a2;
+    //         B[j + 3][i + ii] = a3;
+    //         B[j + 0][i + ii + 4] = a4;
+    //         B[j + 1][i + ii + 4] = a5;
+    //         B[j + 2][i + ii + 4] = a6;
+    //         B[j + 3][i + ii + 4] = a7;
+    //       }
+
+    //       for (ii = 4; ii < 8; ++ii) {
+    //         a0 = A[i + ii][j + 0];
+    //         a1 = A[i + ii][j + 1];
+    //         a2 = A[i + ii][j + 2];
+    //         a3 = A[i + ii][j + 3];
+    //         a4 = A[i + ii][j + 4];
+    //         a5 = A[i + ii][j + 5];
+    //         a6 = A[i + ii][j + 6];
+    //         a7 = A[i + ii][j + 7];
+
+    //         B[j + 4][i + ii - 4] = a0;
+    //         B[j + 5][i + ii - 4] = a1;
+    //         B[j + 6][i + ii - 4] = a2;
+    //         B[j + 7][i + ii - 4] = a3;
+    //         B[j + 4][i + ii] = a4;
+    //         B[j + 5][i + ii] = a5;
+    //         B[j + 6][i + ii] = a6;
+    //         B[j + 7][i + ii] = a7;
+    //       }
+
+    //       for (ii = 0; ii < 4; ++ii) {
+    //         a0 = B[j + 0][i + ii + 4];
+    //         a1 = B[j + 1][i + ii + 4];
+    //         a2 = B[j + 2][i + ii + 4];
+    //         a3 = B[j + 3][i + ii + 4];
+
+    //         B[j + 0][i + ii + 4] = B[j + 4][i + ii];
+    //         B[j + 1][i + ii + 4] = B[j + 5][i + ii];
+    //         B[j + 2][i + ii + 4] = B[j + 6][i + ii];
+    //         B[j + 3][i + ii + 4] = B[j + 7][i + ii];
+
+    //         B[j + 4][i + ii] = a0;
+    //         B[j + 5][i + ii] = a1;
+    //         B[j + 6][i + ii] = a2;
+    //         B[j + 7][i + ii] = a3;
+    //       }
+    //   }
+    // }
+
     for (i = 0; i < N; i += 8) {
       for (j = 0; j < M; j += 8) {
 

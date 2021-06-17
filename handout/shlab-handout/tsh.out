@@ -11,708 +11,240 @@
 # trace03.txt - Run a foreground job.
 #
 tsh> quit
-addjob
-in waitfg loop, pid 68080 and curfg 68080
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68080 and curfg 0
 ./sdriver.pl -t trace04.txt -s ./tsh -a "-p"
 #
 # trace04.txt - Run a background job.
 #
 tsh> ./myspin 1 &
-addjob
-in waitfg loop, pid 68084 and curfg 68084
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68084 and curfg 0
-addjob
-Background running pid 68085: ./myspin 1 &
+[1] (70352) ./myspin 1 &
 ./sdriver.pl -t trace05.txt -s ./tsh -a "-p"
 #
 # trace05.txt - Process jobs builtin command.
 #
 tsh> ./myspin 2 &
-addjob
-in waitfg loop, pid 68092 and curfg 68092
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68092 and curfg 0
-addjob
-Background running pid 68093: ./myspin 2 &
+[1] (70357) ./myspin 2 &
 tsh> ./myspin 3 &
-addjob
-in waitfg loop, pid 68094 and curfg 68094
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68094 and curfg 0
-addjob
-Background running pid 68095: ./myspin 3 &
+[2] (70359) ./myspin 3 &
 tsh> jobs
-addjob
-in waitfg loop, pid 68096 and curfg 68096
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68096 and curfg 0
-[1] (68093) Running ./myspin 2 &
-[2] (68095) Running ./myspin 3 &
+[1] (70357) Running ./myspin 2 &
+[2] (70359) Running ./myspin 3 &
 ./sdriver.pl -t trace06.txt -s ./tsh -a "-p"
 #
 # trace06.txt - Forward SIGINT to foreground job.
 #
 tsh> ./myspin 4
-addjob
-in waitfg loop, pid 68108 and curfg 68108
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68108 and curfg 0
-addjob
-in waitfg loop, pid 68109 and curfg 68109
-suspend now
-in sigint_handler
-in waitfg loop, pid 68109 and curfg 68109
-suspend now
-in sigchld_handler
-after waitpid
-signaled
-Job [1] (68109) terminated by signal 2
-in waitfg loop, pid 68109 and curfg 0
+Job [1] (70365) terminated by signal 2
 ./sdriver.pl -t trace07.txt -s ./tsh -a "-p"
 #
 # trace07.txt - Forward SIGINT only to foreground job.
 #
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68117 and curfg 68117
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68117 and curfg 0
-addjob
-Background running pid 68118: ./myspin 4 &
+[1] (70379) ./myspin 4 &
 tsh> ./myspin 5
-addjob
-in waitfg loop, pid 68119 and curfg 68119
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68119 and curfg 0
-addjob
-in waitfg loop, pid 68120 and curfg 68120
-suspend now
-in sigint_handler
-in waitfg loop, pid 68120 and curfg 68120
-suspend now
-in sigchld_handler
-after waitpid
-signaled
-Job [2] (68120) terminated by signal 2
-in waitfg loop, pid 68120 and curfg 0
+Job [2] (70381) terminated by signal 2
 tsh> jobs
-addjob
-in waitfg loop, pid 68124 and curfg 68124
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68124 and curfg 0
-[1] (68118) Running ./myspin 4 &
+[1] (70379) Running ./myspin 4 &
 ./sdriver.pl -t trace08.txt -s ./tsh -a "-p"
 #
 # trace08.txt - Forward SIGTSTP only to foreground job.
 #
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68128 and curfg 68128
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68128 and curfg 0
-addjob
-Background running pid 68129: ./myspin 4 &
+[1] (70394) ./myspin 4 &
 tsh> ./myspin 5
-addjob
-in waitfg loop, pid 68130 and curfg 68130
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68130 and curfg 0
-addjob
-in waitfg loop, pid 68131 and curfg 68131
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68131 and curfg 68131
-suspend now
-in sigchld_handler
-after waitpid
-Job [2] (68131) stopped by signal 20
-in waitfg loop, pid 68131 and curfg 0
+Job [2] (70396) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68133 and curfg 68133
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68133 and curfg 0
-[1] (68129) Running ./myspin 4 &
-[2] (68131) Stopped ./myspin 5 
+[1] (70394) Running ./myspin 4 &
+[2] (70396) Stopped ./myspin 5 
 ./sdriver.pl -t trace09.txt -s ./tsh -a "-p"
 #
 # trace09.txt - Process bg builtin command
 #
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68137 and curfg 68137
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68137 and curfg 0
-addjob
-Background running pid 68138: ./myspin 4 &
+[1] (70402) ./myspin 4 &
 tsh> ./myspin 5
-addjob
-in waitfg loop, pid 68139 and curfg 68139
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68139 and curfg 0
-addjob
-in waitfg loop, pid 68140 and curfg 68140
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68140 and curfg 68140
-suspend now
-in sigchld_handler
-after waitpid
-Job [2] (68140) stopped by signal 20
-in waitfg loop, pid 68140 and curfg 0
+Job [2] (70404) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68141 and curfg 68141
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68141 and curfg 0
-[1] (68138) Running ./myspin 4 &
-[2] (68140) Stopped ./myspin 5 
+[1] (70402) Running ./myspin 4 &
+[2] (70404) Stopped ./myspin 5 
 tsh> bg %2
-addjob
-in waitfg loop, pid 68142 and curfg 68142
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68142 and curfg 0
+[2] (70404) ./myspin 5 
 tsh> jobs
-addjob
-in sigchld_handler
-in waitfg loop, pid 68143 and curfg 68143
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68143 and curfg 0
-[1] (68138) Running ./myspin 4 &
-[2] (68140) Running ./myspin 5 
+[1] (70402) Running ./myspin 4 &
+[2] (70404) Running ./myspin 5 
 ./sdriver.pl -t trace10.txt -s ./tsh -a "-p"
 #
 # trace10.txt - Process fg builtin command. 
 #
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68154 and curfg 68154
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68154 and curfg 0
-addjob
-Background running pid 68155: ./myspin 4 &
+[1] (70418) ./myspin 4 &
 tsh> fg %1
-addjob
-in waitfg loop, pid 68156 and curfg 68156
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68156 and curfg 0
-in waitfg loop, pid 68155 and curfg 68155
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68155 and curfg 68155
-suspend now
-in sigchld_handler
-after waitpid
-Job [1] (68155) stopped by signal 20
-in waitfg loop, pid 68155 and curfg 0
+Job [1] (70418) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68157 and curfg 68157
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68157 and curfg 0
-[1] (68155) Stopped ./myspin 4 &
+[1] (70418) Stopped ./myspin 4 &
 tsh> fg %1
-addjob
-in waitfg loop, pid 68158 and curfg 68158
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68158 and curfg 0
-in waitfg loop, pid 68155 and curfg 68155
-suspend now
-in sigchld_handler
-in waitfg loop, pid 68155 and curfg 68155
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68155 and curfg 0
 tsh> jobs
-addjob
-in waitfg loop, pid 68165 and curfg 68165
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68165 and curfg 0
 ./sdriver.pl -t trace11.txt -s ./tsh -a "-p"
 #
 # trace11.txt - Forward SIGINT to every process in foreground process group
 #
 tsh> ./mysplit 4
-addjob
-in waitfg loop, pid 68169 and curfg 68169
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68169 and curfg 0
-addjob
-in waitfg loop, pid 68170 and curfg 68170
-suspend now
-in sigint_handler
-in waitfg loop, pid 68170 and curfg 68170
-suspend now
-in sigchld_handler
-after waitpid
-signaled
-Job [1] (68170) terminated by signal 2
-in waitfg loop, pid 68170 and curfg 0
+Job [1] (70434) terminated by signal 2
 tsh> /bin/ps a
-addjob
-in waitfg loop, pid 68172 and curfg 68172
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68172 and curfg 0
     PID TTY      STAT   TIME COMMAND
    2607 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
-   2609 tty2     Sl+   71:04 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   2609 tty2     Sl+   72:31 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
    2630 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
    8712 pts/0    Ss+    0:00 bash
   52709 pts/3    Ss     0:00 /bin/bash
   54361 pts/2    Ss     0:00 bash
-  55234 pts/2    S+     5:53 htop
+  55234 pts/2    S+     7:09 htop
   57657 pts/1    Ss     0:00 bash
   57670 pts/1    S+     0:00 man sigsuspend
   57680 pts/1    S+     0:00 pager
-  68070 pts/3    S+     0:00 bash tsh_test.sh
-  68167 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace11.txt -s ./tsh -a -p
-  68168 pts/3    S+     0:00 ./tsh -p
-  68173 pts/3    R      0:00 /bin/ps a
-addjob
-in waitfg loop, pid 68173 and curfg 68173
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68173 and curfg 0
+  69415 pts/4    Ss+    0:00 /bin/bash
+  70337 pts/3    S+     0:00 bash tsh_test.sh
+  70431 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace11.txt -s ./tsh -a -p
+  70432 pts/3    S+     0:00 ./tsh -p
+  70443 pts/3    R      0:00 /bin/ps a
 ./sdriver.pl -t trace12.txt -s ./tsh -a "-p"
 #
 # trace12.txt - Forward SIGTSTP to every process in foreground process group
 #
 tsh> ./mysplit 4
-addjob
-in waitfg loop, pid 68177 and curfg 68177
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68177 and curfg 0
-addjob
-in waitfg loop, pid 68178 and curfg 68178
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68178 and curfg 68178
-suspend now
-in sigchld_handler
-after waitpid
-Job [1] (68178) stopped by signal 20
-in waitfg loop, pid 68178 and curfg 0
+Job [1] (70448) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68180 and curfg 68180
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68180 and curfg 0
-[1] (68178) Stopped ./mysplit 4 
+[1] (70448) Stopped ./mysplit 4 
 tsh> /bin/ps a
-addjob
-in waitfg loop, pid 68181 and curfg 68181
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68181 and curfg 0
     PID TTY      STAT   TIME COMMAND
    2607 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
-   2609 tty2     Rl+   71:04 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   2609 tty2     Sl+   72:31 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
    2630 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
    8712 pts/0    Ss+    0:00 bash
   52709 pts/3    Ss     0:00 /bin/bash
   54361 pts/2    Ss     0:00 bash
-  55234 pts/2    S+     5:53 htop
+  55234 pts/2    S+     7:09 htop
   57657 pts/1    Ss     0:00 bash
   57670 pts/1    S+     0:00 man sigsuspend
   57680 pts/1    S+     0:00 pager
-  68070 pts/3    S+     0:00 bash tsh_test.sh
-  68175 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace12.txt -s ./tsh -a -p
-  68176 pts/3    S+     0:00 ./tsh -p
-  68178 pts/3    T      0:00 ./mysplit 4
-  68179 pts/3    T      0:00 ./mysplit 4
-  68182 pts/3    R      0:00 /bin/ps a
-addjob
-in waitfg loop, pid 68182 and curfg 68182
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68182 and curfg 0
+  69415 pts/4    Ss+    0:00 /bin/bash
+  70337 pts/3    S+     0:00 bash tsh_test.sh
+  70445 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace12.txt -s ./tsh -a -p
+  70446 pts/3    S+     0:00 ./tsh -p
+  70448 pts/3    T      0:00 ./mysplit 4
+  70449 pts/3    T      0:00 ./mysplit 4
+  70452 pts/3    R      0:00 /bin/ps a
 ./sdriver.pl -t trace13.txt -s ./tsh -a "-p"
 #
 # trace13.txt - Restart every stopped process in process group
 #
 tsh> ./mysplit 4
-addjob
-in waitfg loop, pid 68186 and curfg 68186
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68186 and curfg 0
-addjob
-in waitfg loop, pid 68187 and curfg 68187
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68187 and curfg 68187
-suspend now
-in sigchld_handler
-after waitpid
-Job [1] (68187) stopped by signal 20
-in waitfg loop, pid 68187 and curfg 0
+Job [1] (70457) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68195 and curfg 68195
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68195 and curfg 0
-[1] (68187) Stopped ./mysplit 4 
+[1] (70457) Stopped ./mysplit 4 
 tsh> /bin/ps a
-addjob
-in waitfg loop, pid 68196 and curfg 68196
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68196 and curfg 0
     PID TTY      STAT   TIME COMMAND
    2607 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
-   2609 tty2     Sl+   71:04 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   2609 tty2     Sl+   72:31 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
    2630 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
    8712 pts/0    Ss+    0:00 bash
   52709 pts/3    Ss     0:00 /bin/bash
   54361 pts/2    Ss     0:00 bash
-  55234 pts/2    S+     5:53 htop
+  55234 pts/2    S+     7:09 htop
   57657 pts/1    Ss     0:00 bash
   57670 pts/1    S+     0:00 man sigsuspend
   57680 pts/1    S+     0:00 pager
-  68070 pts/3    S+     0:00 bash tsh_test.sh
-  68184 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
-  68185 pts/3    S+     0:00 ./tsh -p
-  68187 pts/3    T      0:00 ./mysplit 4
-  68188 pts/3    T      0:00 ./mysplit 4
-  68197 pts/3    R      0:00 /bin/ps a
-addjob
-in waitfg loop, pid 68197 and curfg 68197
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68197 and curfg 0
+  69415 pts/4    Ss+    0:00 /bin/bash
+  70337 pts/3    S+     0:00 bash tsh_test.sh
+  70454 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
+  70455 pts/3    S+     0:00 ./tsh -p
+  70457 pts/3    T      0:00 ./mysplit 4
+  70458 pts/3    T      0:00 ./mysplit 4
+  70461 pts/3    R      0:00 /bin/ps a
 tsh> fg %1
-addjob
-in waitfg loop, pid 68198 and curfg 68198
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68198 and curfg 0
-in waitfg loop, pid 68187 and curfg 68187
-suspend now
-in sigchld_handler
-in waitfg loop, pid 68187 and curfg 68187
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68187 and curfg 0
 tsh> /bin/ps a
-addjob
-in waitfg loop, pid 68199 and curfg 68199
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68199 and curfg 0
     PID TTY      STAT   TIME COMMAND
    2607 tty2     Ssl+   0:00 /usr/lib/gdm3/gdm-x-session --run-script env GNOME_SHELL_SESSION_MODE=ubuntu /usr/bin/gnome-session --systemd --session=ubuntu
-   2609 tty2     Sl+   71:04 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
+   2609 tty2     Sl+   72:32 /usr/lib/xorg/Xorg vt2 -displayfd 3 -auth /run/user/1000/gdm/Xauthority -background none -noreset -keeptty -verbose 3
    2630 tty2     Sl+    0:00 /usr/libexec/gnome-session-binary --systemd --systemd --session=ubuntu
    8712 pts/0    Ss+    0:00 bash
   52709 pts/3    Ss     0:00 /bin/bash
   54361 pts/2    Ss     0:00 bash
-  55234 pts/2    S+     5:53 htop
+  55234 pts/2    S+     7:09 htop
   57657 pts/1    Ss     0:00 bash
   57670 pts/1    S+     0:00 man sigsuspend
   57680 pts/1    S+     0:00 pager
-  68070 pts/3    S+     0:00 bash tsh_test.sh
-  68184 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
-  68185 pts/3    S+     0:00 ./tsh -p
-  68200 pts/3    R      0:00 /bin/ps a
-addjob
-in waitfg loop, pid 68200 and curfg 68200
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68200 and curfg 0
+  69415 pts/4    Ss+    0:00 /bin/bash
+  70337 pts/3    S+     0:00 bash tsh_test.sh
+  70454 pts/3    S+     0:00 /usr/bin/perl ./sdriver.pl -t trace13.txt -s ./tsh -a -p
+  70455 pts/3    S+     0:00 ./tsh -p
+  70470 pts/3    R      0:00 /bin/ps a
 ./sdriver.pl -t trace14.txt -s ./tsh -a "-p"
 #
 # trace14.txt - Simple error handling
 #
 tsh> ./bogus
-addjob
-in waitfg loop, pid 68204 and curfg 68204
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68204 and curfg 0
-./bogus: Command not found.
-addjob
-in waitfg loop, pid 68205 and curfg 68205
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68205 and curfg 0
+./bogus: Command not found
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68206 and curfg 68206
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68206 and curfg 0
-addjob
-Background running pid 68207: ./myspin 4 &
+[1] (70477) ./myspin 4 &
 tsh> fg
-addjob
-in waitfg loop, pid 68208 and curfg 68208
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68208 and curfg 0
 fg command requires PID or %jobid argument
-
+tsh> bg
+bg command requires PID or %jobid argument
+tsh> fg a
+fg: argument must be a PID or %jobid
+tsh> bg a
+bg: argument must be a PID or %jobid
+tsh> fg 9999999
+(9999999): No such process
+tsh> bg 9999999
+(9999999): No such process
+tsh> fg %2
+%2: No such job
+tsh> fg %1
+Job [1] (70477) stopped by signal 20
+tsh> bg %2
+%2: No such job
+tsh> bg %1
+[1] (70477) ./myspin 4 &
+tsh> jobs
+[1] (70477) Running ./myspin 4 &
 ./sdriver.pl -t trace15.txt -s ./tsh -a "-p"
 #
 # trace15.txt - Putting it all together
 #
 tsh> ./bogus
-addjob
-in waitfg loop, pid 68219 and curfg 68219
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68219 and curfg 0
-./bogus: Command not found.
-addjob
-in waitfg loop, pid 68220 and curfg 68220
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68220 and curfg 0
+./bogus: Command not found
 tsh> ./myspin 10
-addjob
-in waitfg loop, pid 68221 and curfg 68221
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68221 and curfg 0
-addjob
-in waitfg loop, pid 68222 and curfg 68222
-suspend now
-in sigint_handler
-in waitfg loop, pid 68222 and curfg 68222
-suspend now
-in sigchld_handler
-after waitpid
-signaled
-Job [1] (68222) terminated by signal 2
-in waitfg loop, pid 68222 and curfg 0
+Job [1] (70501) terminated by signal 2
 tsh> ./myspin 3 &
-addjob
-in waitfg loop, pid 68223 and curfg 68223
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68223 and curfg 0
-addjob
-Background running pid 68224: ./myspin 3 &
+[1] (70503) ./myspin 3 &
 tsh> ./myspin 4 &
-addjob
-in waitfg loop, pid 68225 and curfg 68225
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68225 and curfg 0
-addjob
-Background running pid 68226: ./myspin 4 &
+[2] (70505) ./myspin 4 &
 tsh> jobs
-addjob
-in waitfg loop, pid 68227 and curfg 68227
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68227 and curfg 0
-[1] (68224) Running ./myspin 3 &
-[2] (68226) Running ./myspin 4 &
+[1] (70503) Running ./myspin 3 &
+[2] (70505) Running ./myspin 4 &
 tsh> fg %1
-addjob
-in waitfg loop, pid 68228 and curfg 68228
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68228 and curfg 0
-in waitfg loop, pid 68224 and curfg 68224
-suspend now
-in sigtstp_handler
-in waitfg loop, pid 68224 and curfg 68224
-suspend now
-in sigchld_handler
-after waitpid
-Job [1] (68224) stopped by signal 20
-in waitfg loop, pid 68224 and curfg 0
+Job [1] (70503) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68235 and curfg 68235
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68235 and curfg 0
-[1] (68224) Stopped ./myspin 3 &
-[2] (68226) Running ./myspin 4 &
+[1] (70503) Stopped ./myspin 3 &
+[2] (70505) Running ./myspin 4 &
 tsh> bg %3
-addjob
-in waitfg loop, pid 68236 and curfg 68236
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68236 and curfg 0
-[jobid %3]: No such job
-
+%3: No such job
+tsh> bg %1
+[1] (70503) ./myspin 3 &
+tsh> jobs
+[1] (70503) Running ./myspin 3 &
+[2] (70505) Running ./myspin 4 &
+tsh> fg %1
+tsh> quit
 ./sdriver.pl -t trace16.txt -s ./tsh -a "-p"
 #
 # trace16.txt - Tests whether the shell can handle SIGTSTP and SIGINT
 #     signals that come from other processes instead of the terminal.
 #
 tsh> ./mystop 2
-addjob
-in waitfg loop, pid 68240 and curfg 68240
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68240 and curfg 0
-addjob
-in waitfg loop, pid 68241 and curfg 68241
-suspend now
-in sigchld_handler
-after waitpid
-Job [1] (68241) stopped by signal 20
-in waitfg loop, pid 68241 and curfg 0
+Job [1] (70524) stopped by signal 20
 tsh> jobs
-addjob
-in waitfg loop, pid 68248 and curfg 68248
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68248 and curfg 0
-[1] (68241) Stopped ./mystop 2
+[1] (70524) Stopped ./mystop 2
 tsh> ./myint 2
-addjob
-in waitfg loop, pid 68249 and curfg 68249
-suspend now
-in sigchld_handler
-after waitpid
-delete job
-in waitfg loop, pid 68249 and curfg 0
-addjob
-in waitfg loop, pid 68250 and curfg 68250
-suspend now
-in sigchld_handler
-after waitpid
-signaled
-Job [2] (68250) terminated by signal 2
-in waitfg loop, pid 68250 and curfg 0
+Job [2] (70529) terminated by signal 2

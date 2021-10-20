@@ -191,17 +191,6 @@ void do_it(int fd)
     close(fd2server);
 }
 
-void ignore_requesthdrs(rio_t *rp)
-{
-    char buf[MAXLINE];
-
-    Rio_readlineb(rp, buf, MAXLINE);
-    while (strcmp(buf, "\r\n"))
-    { // read until \r\n
-        Rio_readlineb(rp, buf, MAXLINE);
-    }
-}
-
 void extract_hostname(char *hostname, char *str)
 {
     int i = 0;

@@ -1,7 +1,7 @@
 # learning-csapp
 
 
-这是我阅读深入理解计算机系统 CS:APP 并完成所有 lab 的代码，lab源代码[在此](ttp://csapp.cs.cmu.edu/3e/labs.html)。
+这是我阅读深入理解计算机系统 CS:APP 并完成所有 lab 的代码，lab源代码[在此](http://csapp.cs.cmu.edu/3e/labs.html)。
 
 针对这九个 lab 我记录的笔记在对应的笔记地址中，
 
